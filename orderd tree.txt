@@ -1,0 +1,78 @@
+child root;
+
+    child insertNode(child node, int data) {
+        if (node == null) {
+            node = new child(data);
+        } else if (data < node.data) {
+            node.left = insertNode(node.left, data);
+        } else {
+            node.right = insertNode(node.right, data);
+        }
+        return node;
+    }
+
+    public void Insert(int data) {
+        root = insertNode(root, data);
+    }
+
+    public child Search(child node, int data) {
+        child retval;
+        if (node == null || node.data == data) {
+            retval = node;
+        } else if (data < node.data) {
+            retval = Search(node.left, data);
+        } else {
+            retval = Search(node.right, data);
+        }
+        return retval;
+    }
+
+    int max(child root) {
+        if (root.right == null) {
+            return root.data;
+        }
+        return max(root.right);
+    }
+
+    public boolean isEmpty() {
+        return (root == null);
+    }
+
+    int sum(child root) {
+        if (root == null) {
+            return 0;
+        }
+        return root.data + sum(root.right) + sum(root.left);
+    }
+
+    int count(child root) {
+        if (root == null) {
+            return 0;
+        }
+        return 1 + count(root.right) + count(root.left);
+    }
+
+    int countleave(child root) {
+        if (root == null) {
+            return 0;
+        }
+        if (root.left == null && root.right == null) {
+            return 1;
+        } else {
+            return 1 + countleave(root.right) + countleave(root.left);
+        }
+    }
+
+    boolean isidentical(child root1, child root2) {
+        if (root1 == null && root2 == null) {
+            return true;
+        }
+        if (root1 == null || root2 == null) {
+            return false;
+        }
+        if (root1.data == root2.data) {
+            return true;
+        }
+        return isidentical(root1.right, root2.right) && isidentical(root1.left, root2.left);
+
+    }

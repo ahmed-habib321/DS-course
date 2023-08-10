@@ -1,0 +1,16 @@
+node Tail = null;
+   
+    public void push(Object data) {
+        node node = new node(data);
+        node.prev = Tail;
+        Tail = node;
+    }
+
+    public Object pop() {
+        if(Tail!=null){
+        Object data = Tail.data;
+        Tail = Tail.prev;
+        return data;
+        }
+        return null;
+    }

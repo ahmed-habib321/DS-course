@@ -1,0 +1,30 @@
+private int size;
+    private int end;
+    private Object[] queue;
+
+    public Queuearr(int size) {
+        this.size = size;
+        this.end = 0;
+        this.queue = new Object[size];
+    }
+
+    void enqueue(Object data) {
+        if (end < size) {
+            queue[end] = data;
+            end++;
+        } else {
+            System.out.println("error no free space to add in");
+        }
+    }
+
+    Object dequeue() {
+        if (end > 0) {
+            Object t = queue[0];
+            for (int i = 0; i < end-1; i++) {
+                queue[i] = queue[i + 1];
+            }
+            end--;
+            return t;
+        }
+        return null;
+    }
