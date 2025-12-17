@@ -25,10 +25,13 @@ public class StackList {
     /**
      * Pops the top element from the stack.
      */
-    public void pop() {
+    public Object pop() {
+        Object target = null;
         if (top != null) {
+            target = top.getValue();
             top = top.getPrevious();
         }
+        return target;
     }
 
      /**
@@ -41,5 +44,13 @@ public class StackList {
         } else {
             throw new IllegalStateException("Stack is empty.");
         }
+    }
+
+
+    /**
+     * Check if the Stack is empty
+     */
+    public boolean isEmpty() {
+        return top == null;
     }
 }

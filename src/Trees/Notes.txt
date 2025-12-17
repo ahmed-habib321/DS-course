@@ -1,0 +1,442 @@
+🌳 Binary Tree (Basic Concept)
+1️⃣ What is a Binary Tree?
+A binary tree is a tree data structure where each node has at most two children:
+
+- Left child
+- Right child
+
+        A
+       / \
+      B   C
+     / \
+    D   E
+
+2️⃣ Node Structure
+Each node typically contains:
+
+- value
+- left reference
+- right reference
+
+3️⃣ Types of Binary Trees
+
+Full Binary Tree – each node has 0 or 2 children
+Complete Binary Tree – all levels filled except possibly the last
+Perfect Binary Tree – all levels completely filled
+Skewed Tree – looks like a linked list
+
+⚠️ Important:
+A binary tree does not enforce any ordering of values.
+
+
+🌳 Binary Search Tree (BST)
+1️⃣ What is a BST?
+A Binary Search Tree is a binary tree with ordering rules:
+
+Left subtree → values less than node
+Right subtree → values greater than node
+
+        50
+       /  \
+     30    70
+    / \   / \
+  20  40 60  80
+
+2️⃣ Properties
+
+In-order traversal gives sorted output
+Search, insert, delete → O(h) where h is height
+
+⚠️ Problem:
+If inserted in sorted order, BST becomes skewed, and performance degrades to O(n).
+This is why self-balancing trees exist.
+
+
+
+🌳 AVL Tree (Self-Balancing BST)
+
+1️⃣ What is an AVL Tree?
+An AVL Tree is a self-balancing Binary Search Tree.
+
+2️⃣ Key Rule (Balance Factor)
+
+For every node:
+balance factor = height(left) - height(right)
+
+Allowed values:
+-1, 0, +1
+
+If balance factor goes outside this range → tree rebalances
+
+3️⃣ Structure Example
+        30
+       /  \
+     20    40
+    / \
+  10  25
+
+4️⃣ Rotations (How it balances)
+    +Right Rotation
+    +Left Rotation
+    +Left-Right Rotation
+    +Right-Left Rotation
+
+Example (Right Rotation):
+
+      30           20
+     /            /  \
+   20    →       10  30
+  /
+10
+
+5️⃣ Performance
+Operation	Time
+Search	O(log n)
+Insert	O(log n)
+Delete	O(log n)
+
+
+6️⃣ Pros & Cons
+✅ Faster lookups
+❌ More rotations → more overhead
+
+
+🌳 Red-Black Tree (Self-Balancing BST)
+
+1️⃣ What is a Red-Black Tree?
+A Red-Black Tree is a BST that balances using node colors instead of strict height rules.
+
+Each node is either:
+🔴 Red
+⚫ Black
+
+2️⃣ Red-Black Rules
+1- Root is black
+2- Red nodes cannot have red children
+3- Every path from node → null has same number of black nodes
+4- New nodes are red by default
+
+Structure Example
+        50(B)
+       /     \
+   30(R)     70(R)
+   /   \     /   \
+20(B) 40(B) 60(B) 80(B)
+
+3️⃣ How It Balances
+    - Recoloring
+    - Rotations (fewer than AVL)
+
+4️⃣ Performance
+Operation	Time
+Search	O(log n)
+Insert	O(log n)
+Delete	O(log n)
+
+5️⃣ Pros & Cons
+✅ Fewer rotations than AVL
+✅ Better for frequent inserts/deletes
+❌ Slightly slower searches than AVL
+
+📌 AVL vs Red-Black Tree (Quick Comparison)
+Feature	                AVL Tree	        Red-Black Tree
+Balance	                Strict	            Relaxed
+Rotations	            More	            Fewer
+Search speed	        Faster	            Slightly slower
+Insert/Delete	        Slower	            Faster
+Used in	                Databases, search	Java(classes) TreeMap, TreeSet
+
+📌 Java uses Red-Black Trees in:
+TreeMap
+TreeSet
+
+📌 When to Use What?
+Binary Tree → general hierarchical data
+BST → simple ordered data (small size)
+AVL Tree → read-heavy applications
+Red-Black Tree → write-heavy, real-time systems
+
+
+📌 Simple Node Structure (Java Example)
+class Node {
+    int value;
+    Node left, right;
+    int height;      // AVL
+    boolean red;     // Red-Black
+
+    Node(int value) {
+        this.value = value;
+        this.height = 1;
+        this.red = true;
+    }
+}
+
+
+🌳 Syntax Tree
+
+A syntax tree (usually called an Abstract Syntax Tree – AST)
+is a tree representation of the structure of source code,
+showing how a program or expression is parsed according to grammar rules.
+
+It’s a core concept in compilers, interpreters, expression evaluators, and programming languages.
+
+1️⃣ What Is a Syntax Tree?
+A syntax tree represents code as a hierarchical structure instead of raw text.
+
+Example expression:
+3 + 4 * 5
+AST representation:
+      +
+     / \
+    3   *
+       / \
+      4   5
+
+
+This shows:
+* has higher precedence than +
+Order of evaluation is unambiguous
+
+
+2️⃣ Concrete Syntax Tree (Parse Tree) vs AST
+
++Parse Tree (Concrete Syntax Tree)
+    - Represents every grammar rule
+    - Includes parentheses, commas, keywords
+
+Example:
+( 3 + ( 4 * 5 ) )
+
+Tree includes:
+- (
+- )
+- grammar symbols
+
++Abstract Syntax Tree (AST)
+    - Simplified
+    - Removes unnecessary grammar details
+    - Keeps only semantic structure
+
+👉 Compilers mostly use ASTs, not parse trees.
+
+3️⃣ AST Node Structure
+
+Each node represents a language construct:
+    - Operator (+, *)
+    - Literal (3, "hello")
+    - Variable (x)
+    - Statement (if, while, for)
+    - Function call
+
+Example node:
+class ASTNode {
+    String type;   // "Add", "Multiply", "Number"
+    ASTNode left;
+    ASTNode right;
+}
+
+4️⃣ Example: Arithmetic Expression AST
+
+Expression:
+(2 + 3) * 4
+AST:
+       *
+      / \
+     +   4
+    / \
+   2   3
+
+Traversal gives meaning:
+    - Postorder → evaluation
+    - Inorder → infix notation
+    - Preorder → prefix notation
+
+5️⃣ Syntax Tree for Programming Code
+
+Example code:
+if (x > 0) {
+    y = x + 1;
+}
+
+AST (simplified):
+
+        IF
+       /  \
+   (x > 0)  BLOCK
+             |
+           ASSIGN
+          /      \
+         y        +
+                 / \
+                x   1
+
+6️⃣ How Syntax Trees Are Built
+Compiler Phases:
+    Lexical Analysis
+        Source → tokens (if, +, number)
+    Parsing
+        Tokens → syntax tree
+    Semantic Analysis
+        Type checking, scope resolution
+    Code Generation / Interpretation
+
+7️⃣ Why Syntax Trees Are Important
+
+Syntax trees are used for:
+    ✔ Expression evaluation
+    ✔ Compiler optimization
+    ✔ Static code analysis
+    ✔ IDE features (autocomplete, refactoring)
+    ✔ Interpreters (Python, JavaScript engines)
+
+📌 AST is not always binary
+
+
+8️⃣ Expression Evaluation Using AST (Java Example)
+    int evaluate(ASTNode node) {
+        if (node.type.equals("Number"))
+            return Integer.parseInt(node.value);
+
+        int left = evaluate(node.left);
+        int right = evaluate(node.right);
+
+        return switch (node.type) {
+            case "Add" -> left + right;
+            case "Mul" -> left * right;
+            default -> 0;
+        };
+    }
+
+9️⃣ Syntax Tree vs Expression Tree
+    Expression Tree → AST for expressions only
+    Syntax Tree → full program structure
+
+Summary
+    - A syntax tree represents program structure
+    - AST removes unnecessary grammar symbols
+    - Nodes represent operators, statements, expressions
+    - Used by compilers, interpreters, IDEs
+    - Not necessarily binary
+
+
+
+🌳 Huffman Coding Tree (Clear & Exam-Ready Explanation)
+1️⃣ What is Huffman Coding?
+    Huffman Coding is a lossless data compression algorithm that assigns:
+    Shorter binary codes to frequently occurring characters
+    Longer binary codes to less frequent characters
+
+It uses a binary tree called the Huffman Tree.
+📌 Used in:
+    ZIP files
+    JPEG / PNG
+    MP3
+    Data transmission
+
+2️⃣ Core Idea
+Instead of using fixed-length codes (like ASCII – 8 bits per character):
+Huffman coding uses variable-length codes
+Ensures no code is a prefix of another (prefix-free)
+
+3️⃣ Huffman Tree Structure
+Node Types
+Leaf nodes → store characters + frequency
+
+Internal nodes → store combined frequency only
+
+          (100)
+         /     \
+      (45)     (55)
+     /   \     /   \
+   A     B   (25)  (30)
+              / \    \
+             C   D    E
+
+Binary Representation Rule
+Left edge → 0
+Right edge → 1
+
+4️⃣ Steps to Build a Huffman Tree
+Example Frequencies
+Character	Frequency
+A	        45
+B	        13
+C	        12
+D	        16
+E	        9
+F	        5
+
+Step 1: Create Leaf Nodes
+Each character becomes a node with its frequency.
+
+Step 2: Use a Min-Heap (Priority Queue)
+Always pick two lowest-frequency nodes.
+
+Step 3: Merge Nodes
+    Combine them into a new node
+    Frequency = sum of both
+    Left = smaller frequency
+    Right = larger frequency
+Repeat until one root node remains.
+
+5️⃣ Generating Huffman Codes
+
+Traverse the tree:
+
+Left → append 0
+Right → append 1
+
+Example Result
+Character	Huffman Code
+A	        0
+B	        101
+C	        100
+D	        111
+E	        1101
+F	        1100
+
+📌 Prefix Property
+No code starts with another code → unambiguous decoding.
+
+6️⃣ Encoding Example
+
+Text:
+FACE
+
+Using codes:
+F → 1100
+A → 0
+C → 100
+E → 1101
+
+Encoded binary:
+110001001101
+
+7️⃣ Decoding
+    Start from root
+    Read bits one by one
+    0 → go left
+    1 → go right
+    When leaf reached → output character
+
+8️⃣ Time & Space Complexity
+    Operation	Complexity
+    Build Tree	O(n log n)
+    Encode	    O(n)
+    Decode	    O(n)
+    Space	    O(n)
+
+(n = number of unique characters)
+
+9️⃣ Why Huffman Coding is Efficient
+    ✅ Optimal prefix code
+    ✅ No data loss
+    ✅ Reduces file size
+    ❌ Needs frequency table (metadata)
+
+🔟 Huffman Tree vs BST / AVL / Red-Black
+Feature	        Huffman Tree	    AVL / RB Tree
+Ordering    	By frequency	    By value
+Balanced	    No (weight-based)	Yes
+Purpose	        Compression	        Searching
+Traversal	    Binary code	        Sorted output

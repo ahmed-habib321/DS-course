@@ -87,7 +87,7 @@ public class DynamicArrayQueue<T> {
      * Increases the capacity of the underlying array when needed.
      */
     private void resizeArray() {
-        int newCapacity = elements.length * 2;
+        int newCapacity = elements.length + 10;
         T[] newArray = (T[]) new Object[newCapacity];
         System.arraycopy(elements, 0, newArray, 0, rear);
         elements = newArray;

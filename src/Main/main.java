@@ -5,6 +5,7 @@
 package Main;
 
 import BST.BinarySearchTree;
+import Stack.Problems;
 
 
 /**
@@ -17,6 +18,7 @@ public class main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        /*
         BinarySearchTree bst = new BinarySearchTree();
         bst.insert(25);
         bst.insert(30);
@@ -29,6 +31,9 @@ public class main {
         bst.insert(38);
         System.out.println(bst.height());
         System.out.println(bst.isComplete());
+    */
+
+
     }
 
 }
